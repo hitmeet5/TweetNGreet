@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.ghanshyamguides.apps.tweetngreet.activities.ProfileActivity">
+
+    <item android:id="@+id/action_timeline"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_logo"
+        android:title="@string/action_compose"/>
+
+    <item android:id="@+id/action_compose"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_compose_tweet"
+        android:title="@string/action_compose"/>
+
+    <item android:id="@+id/action_settings"
+        android:orderInCategory="300"
+        app:showAsAction="never"
+        android:title="Logout" />
+</menu>

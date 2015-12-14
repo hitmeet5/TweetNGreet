@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.ghanshyamguides.apps.tweetngreet.activities.SettingsActivity">
+</menu>
+<!-- From: file:/Users/hitpanchal/Downloads/codepath-twitter-client-master/app/src/main/res/menu/menu_settings.xml -->

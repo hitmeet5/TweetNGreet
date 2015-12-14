@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/BlueBackground">
+    </android.support.v7.widget.Toolbar>
+
+    <!--<com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="false"
+        app:pstsIndicatorColor="@color/material_deep_teal_500"
+        android:textSize="14sp"
+        android:background="@android:color/white"
+        android:textColor="@color/material_deep_teal_500"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+    </com.astuetz.PagerSlidingTabStrip>-->
+
+    <!--<android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" />-->
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:id="@+id/swipeContainer">
+
+        <ListView
+            android:id="@+id/lvTimeline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Base.ThemeOverlay.AppCompat.Light">
+        </ListView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

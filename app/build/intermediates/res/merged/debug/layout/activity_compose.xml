@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="5dp">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/BlueBackground">
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnSubmitNewTweet"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="100dp"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            style="@style/BlueBackground"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:textColor="#ffffff"
+            android:text="Tweet" />
+
+        </RelativeLayout>
+
+<EditText
+        android:id="@+id/etNewTweetText"
+        android:hint="Tweet What's happening around."
+        android:gravity="top"
+        android:padding="10dp"
+        android:textColorHint="#004545"
+        android:textColor="#009688"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textCursorDrawable="@null"/>
+
+</LinearLayout>
+<!-- From: file:/Users/hitpanchal/Downloads/codepath-twitter-client-master/app/src/main/res/layout/activity_compose.xml -->
