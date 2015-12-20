@@ -23,11 +23,26 @@ The following **required** functionality is completed:
 * [x] Required: User is taken back to home timeline with new tweet visible in timeline
 * [x] Advanced: User can refresh tweets timeline by pulling down to refresh (i.e pull-to-refresh)
 * [x] Advanced: Links in tweets are clickable and will launch the web browser (see autolink)
+* [x] Optional: User can navigate to view their own profile. User can see picture, tagline, # of followers, # of following on their profile.
+* [x] Optional: User can log out
 
 Here's a walkthrough of implemented user stories:
 
 <img src='https://github.com/hitmeet5/TweetNGreet/blob/master/TweetNGreet.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
+
+## Week 3 Completed user stories:
+
+* [x] Required: User can switch between Timeline and Mention views using tabs
+* [x] Required: User can navigate to view their own profile. User can see their tweets on their profile.
+* [x] Required: User can click on the profile image in any tweet to see another user's profile.
+* [x] User can infinitely paginate any of these timelines (home, mentions, user) by scrolling to the bottom
+* [x] Advanced: Error handling, check if internet is available, handle error cases, network failures
+* [x] Advanced: Improve the user interface and theme the app to feel twitter branded
+
+Here's a walkthrough of implemented user stories:
+
+<img src='https://github.com/hitmeet5/TweetNGreet/blob/master/TweetNGreet2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ## License
 
