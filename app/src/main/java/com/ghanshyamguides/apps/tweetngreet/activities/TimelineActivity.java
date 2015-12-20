@@ -1,43 +1,27 @@
 package com.ghanshyamguides.apps.tweetngreet.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.ghanshyamguides.apps.tweetngreet.R;
 import com.ghanshyamguides.apps.tweetngreet.TwitterApplication;
-import com.ghanshyamguides.apps.tweetngreet.adapters.TweetsArrayAdapter;
-import com.ghanshyamguides.apps.tweetngreet.helpers.TwitterClient;
+import com.ghanshyamguides.apps.tweetngreet.fragments.HomeTimelineFragment;
+import com.ghanshyamguides.apps.tweetngreet.fragments.MentionsTimelineFragment;
+import com.ghanshyamguides.apps.tweetngreet.helpers.SmartFragmentStatePagerAdapter;
 import com.ghanshyamguides.apps.tweetngreet.models.Tweet;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class TimelineActivity extends ActionBarActivity {
 
-   // TweetsPagerAdapter pagerAdapter;
+    TweetsPagerAdapter pagerAdapter;
     ViewPager vp;
-
-    TweetsArrayAdapter tweetAdapter;
-    SwipeRefreshLayout swipeContainer;
-    ListView lvTimeline;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,80 +36,13 @@ public class TimelineActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle(" TweetNGreet");
 
-        ArrayList<Tweet> tweets = new ArrayList();
 
-        tweetAdapter = new com.ghanshyamguides.apps.tweetngreet.adapters.TweetsArrayAdapter(this,tweets);
-        lvTimeline = (ListView) findViewById(R.id.lvTimeline);
+        vp = (ViewPager) findViewById(R.id.viewpager);
+        pagerAdapter = new TweetsPagerAdapter(getSupportFragmentManager());
+        vp.setAdapter(pagerAdapter);
+        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabStrip.setViewPager(vp);
 
-        // Bind adapter to the listview
-        lvTimeline.setAdapter(tweetAdapter);
-
-
-
-       // vp = (ViewPager) findViewById(R.id.viewpager);
-      //  pagerAdapter = new TweetsPagerAdapter(getSupportFragmentManager());
-      //  vp.setAdapter(pagerAdapter);
-      //  PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-      //  tabStrip.setViewPager(vp);
-
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                populateTimeline(null);
-            }
-        });
-
-        populateTimeline(null);
-
-    }
-
-
-    private TwitterClient client = TwitterApplication.getRestClient();
-
-    public void populateTimeline(String maxId) {
-        if(isNetworkAvailable()) {
-            client.getHomeTimeline(maxId, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                    ArrayList<Tweet> tweets = Tweet.fromJson(response);
-                    addAll(tweets);
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    System.out.println("Home timeline failed");
-                    System.out.println(errorResponse);
-                    Toast.makeText(getApplicationContext(),
-                            "Couldn't get Tweets :(", Toast.LENGTH_SHORT).show();
-                    swipeContainer.setRefreshing(false);
-                }
-            });
-        } else {
-            Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    protected Boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
-    }
-
-    public void add(Tweet tweet) {
-        tweetAdapter.insert(tweet, 0);
-        tweetAdapter.notifyDataSetChanged();
-    }
-
-    protected void addAll(ArrayList<Tweet> tweets) {
-        tweetAdapter.addAll(tweets);
-        tweetAdapter.notifyDataSetChanged();
-        swipeContainer.setRefreshing(false);
     }
 
     @Override
@@ -166,7 +83,39 @@ public class TimelineActivity extends ActionBarActivity {
         if(requestCode == ComposeActivity.REQUEST_CODE && resultCode == ComposeActivity.REQUEST_CODE) {
             // Append this tweet to the top of the feed
             Tweet tweet = (Tweet) data.getParcelableExtra("tweet");
-            add(tweet);
+            HomeTimelineFragment homeTimlineFragment = (HomeTimelineFragment) pagerAdapter.getRegisteredFragment(0);
+            homeTimlineFragment.add(tweet);
+        }
+    }
+
+    // Returns order of the fragments in the view pager
+    public class TweetsPagerAdapter extends SmartFragmentStatePagerAdapter {
+
+        private String tabTitles[] = { "Home", "@ Mentions" };
+
+        public TweetsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabTitles[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if(position == 0) {
+                return new HomeTimelineFragment();
+            } else if (position == 1) {
+                return new MentionsTimelineFragment();
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return tabTitles.length;
         }
     }
 

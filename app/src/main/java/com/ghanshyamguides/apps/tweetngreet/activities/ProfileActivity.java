@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.ghanshyamguides.apps.tweetngreet.R;
 import com.ghanshyamguides.apps.tweetngreet.TwitterApplication;
+import com.ghanshyamguides.apps.tweetngreet.fragments.UserTimelineFragment;
 import com.ghanshyamguides.apps.tweetngreet.helpers.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -41,7 +42,9 @@ public class ProfileActivity extends ActionBarActivity {
         String username = getIntent().getStringExtra("username");
 
         if (savedInstanceState == null) {
+            UserTimelineFragment userTimeline = UserTimelineFragment.newInstance(username);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.profileFragment, userTimeline);
             transaction.commit();
         }
 
